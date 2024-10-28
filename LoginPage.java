@@ -91,7 +91,7 @@ public class LoginPage {
                 break;
             }
         }
-        if(validated) {PageHandler.updatePage(new Scene(new BorderPane(new Text("Logged In")), 500, 400));}
+        if(validated) {PageHandler.updatePage(new Scene(new BorderPane(new Text("Buyer's Page")), 500, 400));}
         else {showAlert("Error", "Wrong username or password.");}
     }
 
