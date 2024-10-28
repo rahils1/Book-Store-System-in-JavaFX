@@ -7,6 +7,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.text.Text;
 
 import java.util.ArrayList;
 
@@ -21,6 +22,7 @@ public class LoginPage {
     public LoginPage() {
         users = new ArrayList<User>();
         users.add(new User("Temp", "Name", "tempName", "tempPass", "email", 0));
+        users.add(new User("Temp2", "Name2", "tempName2", "tempPass21", "email2", 1));
         loginPage = new VBox();
         loginPage.setAlignment(Pos.CENTER);
         loginPage.setPadding(new Insets(20));
@@ -89,7 +91,7 @@ public class LoginPage {
                 break;
             }
         }
-        if(validated) {PageHandler.updatePage(new Scene(new BorderPane(), 500, 400));}
+        if(validated) {PageHandler.updatePage(new Scene(new BorderPane(new Text("Logged In")), 500, 400));}
         else {showAlert("Error", "Wrong username or password.");}
     }
 
