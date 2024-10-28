@@ -6,13 +6,21 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.scene.control.Alert.AlertType;
+
+import java.util.ArrayList;
 
 public class LoginPage {
     private VBox loginPage, loginBox;
     private Scene sc;
     private Color maroon = Color.web("#8C1D40");
+    private ArrayList<User> users;
+    private TextField usernameField;
+    private PasswordField passwordField;
 
     public LoginPage() {
+        users = new ArrayList<User>();
+        users.add(new User("Temp", "Name", "tempName", "tempPass", "email", 0));
         loginPage = new VBox();
         loginPage.setAlignment(Pos.CENTER);
         loginPage.setPadding(new Insets(20));
@@ -30,13 +38,13 @@ public class LoginPage {
         loginBox.setStyle("-fx-background-color: #F1C27D; -fx-background-radius: 10;");
 
         // Username field
-        TextField usernameField = new TextField();
+        usernameField = new TextField();
         usernameField.setPromptText("Username");
         usernameField.setPadding(new Insets(5,20,5,20));
         usernameField.setStyle("-fx-background-radius: 20;");
 
         // Password field
-        PasswordField passwordField = new PasswordField();
+        passwordField = new PasswordField();
         passwordField.setPromptText("Password");
         passwordField.setPadding(new Insets(5,20,5,20));
         passwordField.setStyle("-fx-background-radius: 20;");
@@ -47,6 +55,7 @@ public class LoginPage {
         loginButton.setStyle("-fx-background-color: #001239; -fx-background-radius: 20;");
         loginButton.setTextFill(maroon);
         loginButton.setPrefWidth(200);
+        loginButton.setOnAction(e->onLoginAttempt());
 
         // Links
         Hyperlink forgotPasswordLink = new Hyperlink("Forgot Password?");
@@ -71,4 +80,24 @@ public class LoginPage {
     public Scene getScene() {return sc;}
 
     public String getString() {return "Login Page";}
+
+    private void onLoginAttempt() {
+        boolean validated = false;
+        for(User u: users) {
+            if(u.validateUser(usernameField.getText(), passwordField.getText())) {
+                validated = true;
+                break;
+            }
+        }
+        if(validated) {PageHandler.updatePage(new Scene(new BorderPane(), 500, 400));}
+        else {showAlert("Error", "Wrong username or password.");}
+    }
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 }
