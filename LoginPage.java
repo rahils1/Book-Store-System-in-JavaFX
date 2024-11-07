@@ -1,0 +1,105 @@
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.text.Text;
+
+import java.util.ArrayList;
+
+public class LoginPage {
+    private VBox loginPage, loginBox;
+    private Scene sc;
+    private Color maroon = Color.web("#8C1D40");
+    private ArrayList<User> users;
+    private TextField usernameField;
+    private PasswordField passwordField;
+
+    public LoginPage() {
+        users = new ArrayList<User>();
+        users.add(new User("Temp", "Name", "tempName", "tempPass", "email", 0));
+        users.add(new User("Temp2", "Name2", "tempName2", "tempPass21", "email2", 1));
+        loginPage = new VBox();
+        loginPage.setAlignment(Pos.CENTER);
+        loginPage.setPadding(new Insets(20));
+        loginPage.setStyle("-fx-background-color: #FFC627;");
+
+        // Logo and title
+        Label titleLabel = new Label("Sparky Book Service");
+        titleLabel.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+        titleLabel.setTextFill(maroon);
+
+        // Login form container
+        loginBox = new VBox(10);
+        loginBox.setAlignment(Pos.CENTER);
+        loginBox.setPadding(new Insets(20));
+        loginBox.setStyle("-fx-background-color: #F1C27D; -fx-background-radius: 10;");
+
+        // Username field
+        usernameField = new TextField();
+        usernameField.setPromptText("Username");
+        usernameField.setPadding(new Insets(5,20,5,20));
+        usernameField.setStyle("-fx-background-radius: 20;");
+
+        // Password field
+        passwordField = new PasswordField();
+        passwordField.setPromptText("Password");
+        passwordField.setPadding(new Insets(5,20,5,20));
+        passwordField.setStyle("-fx-background-radius: 20;");
+
+        // Login button
+        Button loginButton = new Button("Login");
+        loginButton.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+        loginButton.setStyle("-fx-background-color: #001239; -fx-background-radius: 20;");
+        loginButton.setTextFill(maroon);
+        loginButton.setPrefWidth(200);
+        loginButton.setOnAction(e->onLoginAttempt());
+
+        // Links
+        Hyperlink forgotPasswordLink = new Hyperlink("Forgot Password?");
+        forgotPasswordLink.setTextFill(maroon);
+        forgotPasswordLink.setUnderline(false);
+
+        Hyperlink registerLink = new Hyperlink("Register");
+        registerLink.setTextFill(maroon);
+        registerLink.setUnderline(false);
+
+        // Adding components to login container
+        loginBox.getChildren().addAll(usernameField, passwordField, loginButton, forgotPasswordLink, registerLink);
+
+        // Adding all components to main container
+        loginPage.getChildren().addAll(titleLabel, loginBox);
+
+        // Setting up the scene and stage
+        sc = new Scene(loginPage, 500, 400);
+
+    }
+
+    public Scene getScene() {return sc;}
+
+    public String getString() {return "Login Page";}
+
+    private void onLoginAttempt() {
+        boolean validated = false;
+        for(User u: users) {
+            if(u.validateUser(usernameField.getText(), passwordField.getText())) {
+                validated = true;
+                break;
+            }
+        }
+        if(validated) {PageHandler.updatePage(new Scene(new BorderPane(new Text("Buyer's Page")), 500, 400));}
+        else {showAlert("Error", "Wrong username or password.");}
+    }
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+}
