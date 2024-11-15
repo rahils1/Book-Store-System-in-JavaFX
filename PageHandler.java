@@ -4,18 +4,18 @@ import javafx.stage.Stage;
 
 public class PageHandler extends Application {
     private static Stage primaryStage;
-    private LoginPage lp;
 
     public static void main(String[] args) { launch(args); }
 
     @Override
     public void start(Stage stage) {
         primaryStage = stage;
-        lp = new LoginPage();
-        primaryStage.setTitle(lp.getString());
-        primaryStage.setScene(lp.getScene());
+        new LoginPage();
         primaryStage.show();
     }
 
-    public static void updatePage(Scene sc) {primaryStage.setScene(sc);}
+    public static void updateStage(String s, Scene sc) {
+        primaryStage.setTitle(s);
+        primaryStage.setScene(sc);
+    }
 }
