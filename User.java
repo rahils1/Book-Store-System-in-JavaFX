@@ -30,28 +30,28 @@ public class User implements Externalizable {
 
     @Override
     public void writeExternal(ObjectOutput out) throws IOException {
-        out.writeObject(fname);    // Serialize fname
-        out.writeObject(lname);    // Serialize lname
-        out.writeObject(uname);    // Serialize uname
-        out.writeObject(password); // Serialize password
-        out.writeObject(email);    // Serialize email
-        out.writeInt(userID);      // Serialize userID
-        out.writeBoolean(isBuyer); // Serialize isBuyer
-        out.writeBoolean(isSeller);// Serialize isSeller
-        out.writeBoolean(isAdmin); // Serialize isAdmin
+        out.writeObject(fname);
+        out.writeObject(lname);
+        out.writeObject(uname);
+        out.writeObject(password);
+        out.writeObject(email);
+        out.writeInt(userID);
+        out.writeBoolean(isBuyer);
+        out.writeBoolean(isSeller);
+        out.writeBoolean(isAdmin);
     }
 
     @Override
     public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
-        fname = (String) in.readObject();   // Deserialize fname
-        lname = (String) in.readObject();   // Deserialize lname
-        uname = (String) in.readObject();   // Deserialize uname
-        password = (String) in.readObject();// Deserialize password
-        email = (String) in.readObject();   // Deserialize email
-        userID = in.readInt();              // Deserialize userID
-        isBuyer = in.readBoolean();         // Deserialize isBuyer
-        isSeller = in.readBoolean();        // Deserialize isSeller
-        isAdmin = in.readBoolean();         // Deserialize isAdmin
+        fname = (String) in.readObject();
+        lname = (String) in.readObject();
+        uname = (String) in.readObject();
+        password = (String) in.readObject();
+        email = (String) in.readObject();
+        userID = in.readInt();
+        isBuyer = in.readBoolean();
+        isSeller = in.readBoolean();
+        isAdmin = in.readBoolean();
     }
 
     @Override
