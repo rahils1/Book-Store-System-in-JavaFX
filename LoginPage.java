@@ -22,7 +22,6 @@ public class LoginPage {
 
     public LoginPage() {
         users = new ArrayList<User>();
-        users.add(new User("Temp2", "Name2", "tempName2", "tempPass21", "email2", 1));
         loginPage = new VBox();
         loginPage.setAlignment(Pos.CENTER);
         loginPage.setPadding(new Insets(20));
