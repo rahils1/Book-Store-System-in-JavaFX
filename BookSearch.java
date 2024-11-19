@@ -14,6 +14,7 @@ import javafx.scene.text.FontWeight;
 
 public class BookSearch {
     User curr;
+    ListView<String> bookListView;
     public BookSearch(User u) {
         curr = u;
         Color maroon = Color.web("#8C1D40");
@@ -39,7 +40,7 @@ public class BookSearch {
         logoutButton.setFont(Font.font("Arial", 12));
         logoutButton.setStyle("-fx-background-color: #FFC627");
         logoutButton.setTextFill(maroon);
-        logoutButton.setOnAction(e->{new LoginPage(); curr.Serialize();});
+        logoutButton.setOnAction(e->{new LoginPage();});
 
         topBanner.getChildren().addAll(myAccountButton, switchAccountsButton, logoutButton);
 
@@ -88,11 +89,7 @@ public class BookSearch {
         CheckBox mysteryCheckBox = new CheckBox("Mystery");
         mysteryCheckBox.setTextFill(white);
 
-        filtersVBox.getChildren().addAll(
-                conditionLabel, newCheckBox, moderatelyUsedCheckBox, heavilyUsedCheckBox,
-                genreLabel, scifiCheckBox, fantasyCheckBox, comedyCheckBox, dramaCheckBox,
-                thrillerCheckBox, adventureCheckBox, mysteryCheckBox
-        );
+        filtersVBox.getChildren().addAll(conditionLabel, newCheckBox, moderatelyUsedCheckBox, heavilyUsedCheckBox, genreLabel, scifiCheckBox, fantasyCheckBox, comedyCheckBox, dramaCheckBox, thrillerCheckBox, adventureCheckBox, mysteryCheckBox);
 
         VBox availableBooksVBox = new VBox(10);
         availableBooksVBox.setPadding(new Insets(10));
@@ -100,7 +97,7 @@ public class BookSearch {
         availableBooksLabel.setFont(Font.font("Arial", FontWeight.BOLD, 18));
         availableBooksLabel.setTextFill(gold);
 
-        ListView<String> bookListView = new ListView<>();
+        bookListView = new ListView<>();
         bookListView.setPrefSize(280, 400);
         bookListView.getItems().addAll(
                 "Book1 - $10 - Author1", "Book2 - $15 - Author2",
