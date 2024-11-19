@@ -7,9 +7,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.control.Alert.AlertType;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 public class LoginPage {
@@ -71,14 +72,14 @@ public class LoginPage {
     }
 
     private void onLoginAttempt() {
-        String file = usernameField.getText() + ".ser";
-        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(file))) {
-            User deserializedUser = new User();
-            deserializedUser.readExternal(in);
-            boolean v = deserializedUser.validateUser(deserializedUser.getUname(), passwordField.getText());
-            if(!v) {showAlert("Wrong username or password."); return;}
-            new BookSearch(deserializedUser);
-        } catch (IOException | ClassNotFoundException e) {showAlert("Wrong username or password.");}
+        User u;
+        try (Connection conn = MySQLHandler.getConnection(); Statement s = conn.createStatement();
+             ResultSet rs = s.executeQuery("SELECT * FROM users WHERE username = '" + usernameField.getText() + "' LIMIT 1")) {
+            rs.next();
+            u = new User(rs.getString("name"), rs.getString("username"), rs.getString("password"), rs.getString("email"));
+            if(u.validateUser(usernameField.getText(), passwordField.getText())) {new BookSearch(u);}
+            else {showAlert("Wrong Username or Password");}
+        } catch (SQLException e) {showAlert("Wrong Username or Password");}
     }
 
     private void showAlert(String message) {
