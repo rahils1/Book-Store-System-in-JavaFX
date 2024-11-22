@@ -15,38 +15,43 @@ import javafx.scene.text.FontWeight;
 public class BookSearch {
     User curr;
     ListView<String> bookListView;
+    private final Color MAROON = Color.web("#8C1D40");
+    private final Color GOLD = Color.web("#FFC627");
+    private final Color WHITE = Color.web("#FFFFFF");
+
     public BookSearch(User u) {
         curr = u;
-        Color maroon = Color.web("#8C1D40");
-        Color gold = Color.web("#FFC627");
-        Color white = Color.web("#FFFFFF");
 
-        HBox topBanner = new HBox(200);
-        topBanner.setStyle("-fx-background-color: #CECECE;");
-        topBanner.setPadding(new Insets(10));
-        topBanner.setAlignment(Pos.CENTER);
-
+        //Top banner buttons
         Button myAccountButton = new Button("My Account");
         myAccountButton.setFont(Font.font("Arial", 12));
         myAccountButton.setStyle("-fx-background-color: #FFC627");
-        myAccountButton.setTextFill(maroon);
+        myAccountButton.setTextFill(MAROON);
+        myAccountButton.setOnAction(e->{});
 
         Button switchAccountsButton = new Button("Switch to Seller Account");
         switchAccountsButton.setFont(Font.font("Arial", 12));
         switchAccountsButton.setStyle("-fx-background-color: #FFC627");
-        switchAccountsButton.setTextFill(maroon);
-
+        switchAccountsButton.setTextFill(MAROON);
+        switchAccountsButton.setOnAction(e->{});
+        
         Button logoutButton = new Button("Logout");
         logoutButton.setFont(Font.font("Arial", 12));
         logoutButton.setStyle("-fx-background-color: #FFC627");
-        logoutButton.setTextFill(maroon);
-        logoutButton.setOnAction(e->{new LoginPage();});
+        logoutButton.setTextFill(MAROON);
+        logoutButton.setOnAction(e->{curr = null; new LoginPage();});
 
-        topBanner.getChildren().addAll(myAccountButton, switchAccountsButton, logoutButton);
+        //The Banner on the top
+        HBox topBanner = new HBox(200);
+        topBanner.setStyle("-fx-background-color: #CECECE;");
+        topBanner.setPadding(new Insets(10));
+        topBanner.setAlignment(Pos.CENTER);
+        if(u.getUserType().equals("Buyer and Seller")) {topBanner.getChildren().addAll(myAccountButton, switchAccountsButton,logoutButton);}
+        else {topBanner.getChildren().addAll(myAccountButton, logoutButton);}
 
         Label buyersPageLabel = new Label("Purchase Books");
         buyersPageLabel.setFont(Font.font("Arial", FontWeight.BOLD, 28));
-        buyersPageLabel.setTextFill(gold);
+        buyersPageLabel.setTextFill(GOLD);
 
         HBox titleBox = new HBox(buyersPageLabel);
         titleBox.setAlignment(Pos.CENTER);
@@ -58,36 +63,36 @@ public class BookSearch {
         filtersVBox.setPrefWidth(200);
 
         Label conditionLabel = new Label("Condition");
-        conditionLabel.setTextFill(gold);
+        conditionLabel.setTextFill(GOLD);
         conditionLabel.setFont(Font.font("Arial", FontWeight.BOLD, 18));
         conditionLabel.setAlignment(Pos.CENTER);
 
         CheckBox newCheckBox = new CheckBox("New");
-        newCheckBox.setTextFill(white);
+        newCheckBox.setTextFill(WHITE);
         CheckBox moderatelyUsedCheckBox = new CheckBox("Moderately Used");
-        moderatelyUsedCheckBox.setTextFill(white);
+        moderatelyUsedCheckBox.setTextFill(WHITE);
         CheckBox heavilyUsedCheckBox = new CheckBox("Heavily Used");
-        heavilyUsedCheckBox.setTextFill(white);
+        heavilyUsedCheckBox.setTextFill(WHITE);
 
         Label genreLabel = new Label("Genre");
-        genreLabel.setTextFill(gold);
+        genreLabel.setTextFill(GOLD);
         genreLabel.setFont(Font.font("Arial", FontWeight.BOLD, 18));
         genreLabel.setAlignment(Pos.CENTER);
 
         CheckBox scifiCheckBox = new CheckBox("Sci-Fi");
-        scifiCheckBox.setTextFill(white);
+        scifiCheckBox.setTextFill(WHITE);
         CheckBox fantasyCheckBox = new CheckBox("Fantasy");
-        fantasyCheckBox.setTextFill(white);
+        fantasyCheckBox.setTextFill(WHITE);
         CheckBox comedyCheckBox = new CheckBox("Comedy");
-        comedyCheckBox.setTextFill(white);
+        comedyCheckBox.setTextFill(WHITE);
         CheckBox dramaCheckBox = new CheckBox("Drama");
-        dramaCheckBox.setTextFill(white);
+        dramaCheckBox.setTextFill(WHITE);
         CheckBox thrillerCheckBox = new CheckBox("Thriller");
-        thrillerCheckBox.setTextFill(white);
+        thrillerCheckBox.setTextFill(WHITE);
         CheckBox adventureCheckBox = new CheckBox("Adventure");
-        adventureCheckBox.setTextFill(white);
+        adventureCheckBox.setTextFill(WHITE);
         CheckBox mysteryCheckBox = new CheckBox("Mystery");
-        mysteryCheckBox.setTextFill(white);
+        mysteryCheckBox.setTextFill(WHITE);
 
         filtersVBox.getChildren().addAll(conditionLabel, newCheckBox, moderatelyUsedCheckBox, heavilyUsedCheckBox, genreLabel, scifiCheckBox, fantasyCheckBox, comedyCheckBox, dramaCheckBox, thrillerCheckBox, adventureCheckBox, mysteryCheckBox);
 
@@ -95,7 +100,7 @@ public class BookSearch {
         availableBooksVBox.setPadding(new Insets(10));
         Label availableBooksLabel = new Label("Available Books");
         availableBooksLabel.setFont(Font.font("Arial", FontWeight.BOLD, 18));
-        availableBooksLabel.setTextFill(gold);
+        availableBooksLabel.setTextFill(GOLD);
 
         bookListView = new ListView<>();
         bookListView.setPrefSize(280, 400);

@@ -5,15 +5,12 @@ import javafx.stage.Stage;
 public class PageHandler extends Application {
     private static Stage primaryStage;
 
-
-    public static void main(String[] args) {
-        launch(args);
-    }
+    public static void main(String[] args) {launch(args);}
 
     @Override
     public void start(Stage stage) {
         primaryStage = stage;
-        new LoginPage();
+        new AccountOverview(new User("1", "2", "3", "4", "5"));
         primaryStage.show();
     }
 

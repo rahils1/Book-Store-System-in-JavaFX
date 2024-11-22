@@ -1,26 +1,23 @@
-import java.io.*;
-
 public class User {
-    private String name, uname, password, email;
-    private boolean isBuyer, isSeller, isAdmin;
+    private String name, uname, password, email, userType;
 
-    public User() {
-        name = uname = password = email = "";
-        isBuyer = isSeller = isAdmin = false;
-    }
-
-    public User(String name, String uname, String password, String email) {
+    public User(String name, String uname, String password, String email, String userType) {
         this.name = name;
         this.uname = uname;
         this.password = password;
         this.email = email;
-        isBuyer = true;
-        isAdmin = isSeller = false;
+        this.userType = userType;
     }
 
     public String getPassword() {return password;}
 
     public String getUname() {return uname;}
+
+    public String getName() {return name;}
+
+    public String getEmail() {return email;}
+
+    public String getUserType() {return userType;}
 
     public boolean validateUser(String uname, String password) {return (this.uname.equals(uname) && this.password.equals(password));}
 }
