@@ -2,7 +2,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -16,8 +15,6 @@ public class AccountOverview {
         final Color MAROON = Color.web("#8C1D40");
         final Color GOLD = Color.web("FFC627");
 
-        GridPane myAccount = new GridPane();
-
         Button backButton = new Button("Back");
         backButton.setFont(Font.font("Arial", 12));
         backButton.setStyle("-fx-background-color: #FFC627");
@@ -30,7 +27,7 @@ public class AccountOverview {
         logoutButton.setStyle("-fx-background-color: #FFC627");
         logoutButton.setTextFill(MAROON);
         logoutButton.setPrefHeight(20);
-        logoutButton.setOnAction(e->{});
+        logoutButton.setOnAction(e->{curr = null; new LoginPage();});
 
         HBox topBanner = new HBox(350, backButton, logoutButton);
         topBanner.setStyle("-fx-background-color: #CECECE");
@@ -45,23 +42,19 @@ public class AccountOverview {
         HBox accountOverviewBox = new HBox(accountOverviewLabel);
         accountOverviewBox.setAlignment(Pos.CENTER);
 
-        Label firstName = new Label("First Name: FirstName");
+        Label firstName = new Label("First Name: " + u.getName().substring(0, u.getName().indexOf(" ")));
         firstName.setFont(Font.font("Arial", 15));
         firstName.setTextFill(MAROON);
         firstName.setStyle("-fx-background-color: #CECECE");
-        firstName.setMinSize(75, 40);
+        firstName.setPrefSize(150, 40);
 
         Label username = new Label("Username: Username");
         username.setFont(Font.font("Arial", 15));
         username.setTextFill(MAROON);
         username.setStyle("-fx-background-color: #CECECE");
-        username.setMinSize(75, 40);
+        username.setPrefSize(150, 40);
 
-        VBox firstColumn = new VBox(40, firstName, username);
-        firstColumn.setPadding(new Insets(20, 0, 0, 10));
-        firstColumn.setSpacing(40);
-
-        Label lastName = new Label("Last Name: LastName");
+        Label lastName = new Label("Last Name: " + u.getName().substring(u.getName().indexOf(" "), u.getName().length()));
         lastName.setFont(Font.font("Arial", 15));
         lastName.setTextFill(MAROON);
         lastName.setStyle("-fx-background-color: #CECECE");
@@ -73,24 +66,28 @@ public class AccountOverview {
         password.setStyle("-fx-background-color: #CECECE");
         password.setMinSize(75, 40);
 
-        Button changePassword = new Button("Change Password");
-        changePassword.setFont(Font.font("Arial", 15));
-        changePassword.setTextFill(MAROON);
-        changePassword.setStyle("-fx-background-color: #FFC627");
-        changePassword.setMinSize(60, 40);
+        Button changePasswordButton = new Button("Change Password");
+        changePasswordButton.setFont(Font.font("Arial", 15));
+        changePasswordButton.setTextFill(MAROON);
+        changePasswordButton.setStyle("-fx-background-color: #FFC627");
+        changePasswordButton.setMinSize(60, 40);
+        changePasswordButton.setAlignment(Pos.CENTER);
 
-        VBox secondColumn = new VBox();
+        VBox firstColumn = new VBox(40, firstName, username);
+        firstColumn.setPadding(new Insets(20, 0, 0, 10));
+
+        VBox secondColumn = new VBox(40, lastName, password);
         secondColumn.setPadding(new Insets(20, 10, 0, 0));
-        secondColumn.setSpacing(40);
 
-        secondColumn.getChildren().addAll(lastName, password);
+        HBox columnHolder = new HBox(40, firstColumn, secondColumn);
+        columnHolder.setAlignment(Pos.CENTER);
 
-        firstColumn.getChildren().addAll(firstName, username);
-        myAccount.add(topBanner, 0, 0);
-        myAccount.add(accountOverviewBox, 0, 1);
-        myAccount.add(firstColumn, 0, 2);
-        myAccount.add(secondColumn, 0, 2);
-        Scene sc = new Scene(myAccount,500,400);
+        VBox myAccount = new VBox(50, topBanner, accountOverviewBox, columnHolder, changePasswordButton);
+        myAccount.setStyle("-fx-background-color: #8C1D40");
+        myAccount.setAlignment(Pos.CENTER);
+        myAccount.setPadding(new Insets(0, 0, 20, 0));
+
+        Scene sc = new Scene(myAccount,500,420);
         PageHandler.updateStage("Account Overview", sc);
     }
 

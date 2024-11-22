@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `sparky_book_service` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `sparky_book_service`;
 -- MySQL dump 10.13  Distrib 8.0.31, for macos12 (x86_64)
 --
 -- Host: localhost    Database: sparky_book_service
@@ -53,11 +55,11 @@ DROP TABLE IF EXISTS `users`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `users` (
   `username` varchar(50) NOT NULL,
-  `name` varchar(100) DEFAULT NULL,
+  `fullName` varchar(100) DEFAULT NULL,
   `email` varchar(100) DEFAULT NULL,
-  `password` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`username`),
-  UNIQUE KEY `email` (`email`)
+  `pass` varchar(100) DEFAULT NULL,
+  `userType` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -67,7 +69,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES ('jane_smith','Jane Smith','jane@example.com','pass456'),('john_doe','John Doe','john@example.com','securePass123');
+INSERT INTO `users` VALUES ('jane_doe','Jane Doe','janedoe@example.com','pass123','Buyer and Seller'),('jane_smith','Jane Smith','jane@example.com','pass456','Buyer'),('john_doe','John Doe','john@example.com','securePass123','Seller'),('john_smith','John Smith','johnsmith@example.com','securePass456','Buyer and Seller');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -80,4 +82,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-18 18:08:59
+-- Dump completed on 2024-11-22  1:11:15
