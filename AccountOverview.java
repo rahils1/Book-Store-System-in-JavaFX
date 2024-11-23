@@ -46,32 +46,36 @@ public class AccountOverview {
         firstName.setFont(Font.font("Arial", 15));
         firstName.setTextFill(MAROON);
         firstName.setStyle("-fx-background-color: #CECECE");
-        firstName.setPrefSize(150, 40);
+        firstName.setAlignment(Pos.CENTER);
+        firstName.setPrefSize(175, 40);
 
-        Label username = new Label("Username: Username");
+        Label username = new Label("Username: " + u.getUname());
         username.setFont(Font.font("Arial", 15));
         username.setTextFill(MAROON);
         username.setStyle("-fx-background-color: #CECECE");
-        username.setPrefSize(150, 40);
+        username.setAlignment(Pos.CENTER);
+        username.setPrefSize(175, 40);
 
         Label lastName = new Label("Last Name: " + u.getName().substring(u.getName().indexOf(" "), u.getName().length()));
         lastName.setFont(Font.font("Arial", 15));
         lastName.setTextFill(MAROON);
         lastName.setStyle("-fx-background-color: #CECECE");
-        lastName.setMinSize(75, 40);
+        lastName.setAlignment(Pos.CENTER);
+        lastName.setPrefSize(175, 40);
 
         Label password = new Label("Password: ******");
         password.setFont(Font.font("Arial", 15));
         password.setTextFill(MAROON);
         password.setStyle("-fx-background-color: #CECECE");
-        password.setMinSize(75, 40);
+        password.setAlignment(Pos.CENTER);
+        password.setPrefSize(175, 40);
 
         Button changePasswordButton = new Button("Change Password");
         changePasswordButton.setFont(Font.font("Arial", 15));
+        changePasswordButton.setOnAction(e->new PasswordChange());
         changePasswordButton.setTextFill(MAROON);
         changePasswordButton.setStyle("-fx-background-color: #FFC627");
         changePasswordButton.setMinSize(60, 40);
-        changePasswordButton.setAlignment(Pos.CENTER);
 
         VBox firstColumn = new VBox(40, firstName, username);
         firstColumn.setPadding(new Insets(20, 0, 0, 10));

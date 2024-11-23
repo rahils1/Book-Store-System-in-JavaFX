@@ -26,7 +26,7 @@ public class LoginPage {
         usernameField.setPromptText("Username");
         usernameField.setPadding(new Insets(5,20,5,20));
         usernameField.setStyle("-fx-background-radius: 20;");
-        usernameField.textProperty().addListener(((_, __, newuName) -> usernameField.setText(newuName.trim())));
+        usernameField.textProperty().addListener(((o, olduName, newuName) -> usernameField.setText(newuName.trim())));
 
 
         //sets up password field
@@ -34,7 +34,7 @@ public class LoginPage {
         passwordField.setPromptText("Password");
         passwordField.setPadding(new Insets(5,20,5,20));
         passwordField.setStyle("-fx-background-radius: 20;");
-        passwordField.textProperty().addListener(((_, __, newPass) -> passwordField.setText(newPass.trim())));
+        passwordField.textProperty().addListener(((o, oldPass, newPass) -> passwordField.setText(newPass.trim())));
 
         //Sets up login button
         Button loginButton = new Button("Login");
@@ -46,6 +46,7 @@ public class LoginPage {
 
         //TODO
         Hyperlink forgotPasswordLink = new Hyperlink("Forgot Password?");
+        forgotPasswordLink.setOnAction(e->new PasswordChange());
         forgotPasswordLink.setTextFill(MAROON);
 
         //Sets up register link
@@ -80,7 +81,7 @@ public class LoginPage {
             if(u.validateUser(usernameField.getText().trim(), passwordField.getText().trim())) {new BookSearch(u);}
             else {showAlert("Wrong Username or Password");}
             rs.close();
-        } catch (SQLException e) {showAlert("Wron Username or Password");}
+        } catch (SQLException e) {showAlert("Wrong Username or Password");}
     }
 
     //Handles error messages

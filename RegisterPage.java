@@ -46,7 +46,7 @@ public class RegisterPage {
         emailField.setPadding(new Insets(5,10,5,10));
         emailField.setStyle("-fx-background-radius: 10;");
         VBox emailHolder = new VBox(emailLabel,emailField);
-        emailField.textProperty().addListener(((_, __, newEmail) -> emailField.setText(newEmail.trim())));
+        emailField.textProperty().addListener(((o, __, newEmail) -> emailField.setText(newEmail.trim())));
 
         //Everything that sets up the first name ui part
         Label fNameLabel = new Label("First Name");
@@ -56,7 +56,7 @@ public class RegisterPage {
         fNameField.setPadding(new Insets(5,10,5,10));
         fNameField.setStyle("-fx-background-radius: 10;");
         VBox fNameHolder = new VBox(fNameLabel, fNameField);
-        fNameField.textProperty().addListener(((_, __, newfName) -> fNameField.setText(newfName.trim())));
+        fNameField.textProperty().addListener(((o, oldfName, newfName) -> fNameField.setText(newfName.trim())));
 
         //Everything that sets up the last name ui part
         Label lNameLabel = new Label("Last Name");
@@ -66,7 +66,7 @@ public class RegisterPage {
         lNameField.setPadding(new Insets(5,10,5,10));
         lNameField.setStyle("-fx-background-radius: 10;");
         VBox lNameHolder = new VBox(lNameLabel, lNameField);
-        lNameField.textProperty().addListener(((_, __, newlName) -> lNameField.setText(newlName.trim())));
+        lNameField.textProperty().addListener(((o, oldlName, newlName) -> lNameField.setText(newlName.trim())));
 
         //Everything that sets up the username ui part
         Label usernameLabel = new Label("Username");
@@ -76,7 +76,7 @@ public class RegisterPage {
         usernameField.setPadding(new Insets(5,10,5,10));
         usernameField.setStyle("-fx-background-radius: 10;");
         VBox usernameHolder = new VBox(usernameLabel, usernameField);
-        usernameField.textProperty().addListener(((_, __, newuName) -> usernameField.setText(newuName.trim())));
+        usernameField.textProperty().addListener(((o, olduName, newuName) -> usernameField.setText(newuName.trim())));
 
         //Everything that sets up the password ui part
         Label passwordLabel = new Label("Password");
@@ -86,7 +86,7 @@ public class RegisterPage {
         passwordField.setPadding(new Insets(5,10,5,10));
         passwordField.setStyle("-fx-background-radius: 10;");
         VBox passwordHolder = new VBox(passwordLabel, passwordField);
-        passwordField.textProperty().addListener(((_, __, newPass) -> passwordField.setText(newPass.trim())));
+        passwordField.textProperty().addListener(((o, __, newPass) -> passwordField.setText(newPass.trim())));
 
         //Everything that sets up the login ui part
         Hyperlink loginLink = new Hyperlink("Already have an account? Login");
@@ -142,7 +142,7 @@ public class RegisterPage {
             rs.next();
             if(rs.getString("username").equals(username)) {showAlert("Duplicate Username");rs.close();return;}
             rs.close();
-        } catch (SQLException _) {}
+        } catch (SQLException e) {}
 
         String query2 = "SELECT * FROM users WHERE email = '" + email + "' LIMIT 1";
         ResultSet rs2 = DataManipulator.query(query2);
@@ -150,7 +150,7 @@ public class RegisterPage {
             rs2.next();
             if(rs2.getString("email").equals(email)) {showAlert("User With That Email Already Exists");rs2.close();return;}
             rs2.close();
-        } catch (SQLException _) {}
+        } catch (SQLException e) {}
 
         String s = "INSERT INTO users (email, fullName, username, pass, userType) " +  "VALUES  ('" + email + "', '" + fName + " " + lName + "', '" + username + "', '" + password + "', '" + type + "')";
         DataManipulator.update(s);

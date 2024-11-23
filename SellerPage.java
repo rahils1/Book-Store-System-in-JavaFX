@@ -8,8 +8,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-
-import java.util.Random;
 import java.util.random.RandomGenerator;
 
 public class SellerPage {
@@ -19,7 +17,7 @@ public class SellerPage {
     private final Color WHITE = Color.web("#FFFFFF");
     private Label auto_price_label;
 
-    public SellerPage(User u){
+    public SellerPage(User u) {
         curr = u;
 
         //Code starts for top banner
@@ -29,20 +27,27 @@ public class SellerPage {
         myAccountButton.setFont(Font.font("Arial", 12));
         myAccountButton.setStyle("-fx-background-color: #FFC627");
         myAccountButton.setTextFill(MAROON);
-        myAccountButton.setOnAction(e->{new AccountOverview(curr);});
+        myAccountButton.setOnAction(e -> {
+            new AccountOverview(curr);
+        });
 
         Button logoutButton = new Button("Logout");
         logoutButton.setFont(Font.font("Arial", 12));
         logoutButton.setStyle("-fx-background-color: #FFC627");
         logoutButton.setTextFill(MAROON);
-        logoutButton.setOnAction(e->{curr = null; new LoginPage();});
+        logoutButton.setOnAction(e -> {
+            curr = null;
+            new LoginPage();
+        });
 
         //Top Banner layout
         HBox topBanner = new HBox(200);
         topBanner.setStyle("-fx-background-color: #CECECE;");
         topBanner.setPadding(new Insets(10));
         topBanner.setAlignment(Pos.CENTER);
-        if(u.getUserType().equals("Seller") || u.getUserType().equals("Buyer and Seller")) {topBanner.getChildren().addAll(myAccountButton, logoutButton);}
+        if (u.getUserType().equals("Seller") || u.getUserType().equals("Buyer and Seller")) {
+            topBanner.getChildren().addAll(myAccountButton, logoutButton);
+        }
 
         //Title of the page
         Label sellerPageLabel = new Label("Sell Books");
@@ -89,7 +94,8 @@ public class SellerPage {
         //Button List My Book
         Button listMyBook = new Button("List My Book");
         listMyBook.setStyle("-fx-background-color: #FFC627; -fx-font-size: 12;");
-        listMyBook.setOnAction(e->{});
+        listMyBook.setOnAction(e -> {
+        });
 
         //Vbox for genre checkboxes and setting margin for each checkbox
         VBox genre_set = new VBox(15);
@@ -203,7 +209,6 @@ public class SellerPage {
         right_page.getChildren().addAll(title_label, book_title, selling_price_label, auto_price_label);
 
 
-
         BorderPane mainLayout = new BorderPane();
         mainLayout.setStyle("-fx-background-color: #8C1D40;");
         mainLayout.setTop(top_page);
@@ -220,7 +225,7 @@ public class SellerPage {
 
     }
 
-    private double generate_price(int price, String condition){
+    private double generate_price(int price, String condition) {
         return RandomGenerator.getDefault().nextDouble();
     }
 }

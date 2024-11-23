@@ -10,7 +10,7 @@ public class PageHandler extends Application {
     @Override
     public void start(Stage stage) {
         primaryStage = stage;
-        new AccountOverview(new User("1", "2", "3", "4", "5"));
+        new LoginPage();
         primaryStage.show();
     }
 

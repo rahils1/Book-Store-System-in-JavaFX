@@ -10,7 +10,7 @@ public class DataManipulator {
                 Statement stmt = connection.createStatement();
                 stmt.executeUpdate(updateStatement);
             }
-        } catch (SQLException _) {}
+        } catch (SQLException e) {}
     }
 
     //Gets the result
@@ -22,7 +22,7 @@ public class DataManipulator {
                 Statement stmt = connection.createStatement();
                 rs = stmt.executeQuery(query);
             }
-        } catch (SQLException _) {}
+        } catch (SQLException e) {}
         return rs;
     }
 }
