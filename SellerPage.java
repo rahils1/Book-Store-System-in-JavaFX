@@ -8,7 +8,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import java.util.random.RandomGenerator;
 
 public class SellerPage {
     User curr;
@@ -30,11 +29,11 @@ public class SellerPage {
         myAccountButton.setTextFill(MAROON);
         myAccountButton.setOnAction(e ->new AccountOverview(curr));
 
-        Button switchAccountsButton = new Button("Switch to Seller Account");
+        Button switchAccountsButton = new Button("Switch to Buyer Account");
         switchAccountsButton.setFont(Font.font("Arial", 12));
         switchAccountsButton.setStyle("-fx-background-color: #FFC627");
         switchAccountsButton.setTextFill(MAROON);
-        switchAccountsButton.setOnAction(e->new SellerPage(curr));
+        switchAccountsButton.setOnAction(e->new BookSearch(curr));
 
         Button logoutButton = new Button("Logout");
         logoutButton.setFont(Font.font("Arial", 12));
@@ -135,10 +134,10 @@ public class SellerPage {
 
         //quality radio buttons
         ToggleGroup qualityGroup = new ToggleGroup();
-        RadioButton unused = new RadioButton("New");
-        unused.setToggleGroup(qualityGroup);
-        unused.setSelected(true);
-        unused.setTextFill(Color.WHITE);
+        RadioButton newToggle = new RadioButton("Used Like New");
+        newToggle.setToggleGroup(qualityGroup);
+        newToggle.setSelected(true);
+        newToggle.setTextFill(Color.WHITE);
         RadioButton moderately_used = new RadioButton("Moderately Used");
         moderately_used.setToggleGroup(qualityGroup);
         moderately_used.setTextFill(Color.WHITE);
@@ -170,7 +169,7 @@ public class SellerPage {
         });
 
         //Add radio buttons to a vbox
-        VBox radio_buttons = new VBox(15, unused, moderately_used, heavily_used);
+        VBox radio_buttons = new VBox(15, newToggle, moderately_used, heavily_used);
         radio_buttons.setStyle("-fx-background-color: #8C1D40;");
 
         //Add Quality, price and generate price button to a vbox
@@ -213,7 +212,7 @@ public class SellerPage {
         right_page.setPrefWidth(300);
         right_page.setAlignment(Pos.TOP_LEFT);
 
-        listMyBook.setOnAction(e->listBook(book_title.getText().trim(), ((RadioButton)genreToggle.getSelectedToggle()).getText().trim(), ((RadioButton)qualityGroup.getSelectedToggle()).getText().trim(), curr.getUname(), "", generate_price(0, "New")));
+        listMyBook.setOnAction(e->listBook(book_title.getText().trim(), ((RadioButton)genreToggle.getSelectedToggle()).getText().trim(), ((RadioButton)qualityGroup.getSelectedToggle()).getText().trim(), curr.getUname(), generate_price(0, "New")));
 
         BorderPane mainLayout = new BorderPane();
         mainLayout.setStyle("-fx-background-color: #8C1D40;");
@@ -229,11 +228,18 @@ public class SellerPage {
         PageHandler.updateStage("Book Sell", sc);
     }
 
-    private void listBook(String title, String genre, String condition, String seller, String author, double price) {
-        String query = "INSERT INTO books (title, genre, bookCondition, seller, author, price) VALUES ('" + title + "', '" + genre + "', '" + condition + "', '" + seller + " ', '" + author + "', '" + price + "')";
+    private void listBook(String title, String genre, String condition, String seller, double price) {
+        String query = "INSERT INTO books (title, genre, bookCondition, seller, price) VALUES ('" + title + "', '" + genre + "', '" + condition + "', '" + seller + "', '" + price + "')";
+        System.out.println(query);
     }
 
     private double generate_price(int price, String condition) {
-        return RandomGenerator.getDefault().nextDouble();
+        double generatedPrice = 0.0;
+        return generatedPrice;
+    }
+
+    private void showAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR, message);
+        alert.showAndWait();
     }
 }

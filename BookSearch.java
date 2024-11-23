@@ -67,7 +67,7 @@ public class BookSearch {
         conditionLabel.setFont(Font.font("Arial", FontWeight.BOLD, 18));
         conditionLabel.setAlignment(Pos.CENTER);
 
-        CheckBox newCheckBox = new CheckBox("New");
+        CheckBox newCheckBox = new CheckBox("Used Like New");
         newCheckBox.setTextFill(WHITE);
         newCheckBox.setOnAction(e->updateBookListView());
         CheckBox moderatelyUsedCheckBox = new CheckBox("Moderately Used");
@@ -138,14 +138,12 @@ public class BookSearch {
 
         // Action Buttons at the bottom
         Button addToCartButton = new Button("Add to Cart");
+        addToCartButton.setTextFill(MAROON);
         Button viewCartButton = new Button("View Cart");
-        Button cancelOrderButton = new Button("Cancel Order");
-        Button orderButton = new Button("Order");
+        viewCartButton.setTextFill(MAROON);
 
         addToCartButton.setStyle("-fx-background-color: #FFC627; -fx-font-size: 12;");
         viewCartButton.setStyle("-fx-background-color: #FFC627; -fx-font-size: 12;");
-        cancelOrderButton.setStyle("-fx-background-color: #FFC627; -fx-font-size: 12;");
-        orderButton.setStyle("-fx-background-color: #FFC627; -fx-font-size: 12;");
 
         HBox buttonBox = new HBox(100, addToCartButton, viewCartButton);
         buttonBox.setPadding(new Insets(10));
@@ -202,7 +200,7 @@ public class BookSearch {
         ResultSet rs = DataManipulator.query(query);
         try {
             while(rs.next()) {
-                b = new Book(rs.getString("title"), rs.getString("bookCondition"), rs.getString("genre"), rs.getString("author"), rs.getDouble("price"), rs.getInt("id"));
+                b = new Book(rs.getString("title"), rs.getString("bookCondition"), rs.getString("genre"), rs.getDouble("price"), rs.getInt("id"));
                 if(b.getTitle().contains(search.getText().trim())){bookListView.getItems().add(b.toString());}
             }
         } catch (SQLException e) {}
@@ -215,7 +213,7 @@ public class BookSearch {
         try {
             bookListView.getItems().clear();
             while(rs.next()) {
-                b = new Book(rs.getString("title"), rs.getString("bookCondition"), rs.getString("genre"), rs.getString("author"), rs.getDouble("price"), rs.getInt("id"));
+                b = new Book(rs.getString("title"), rs.getString("bookCondition"), rs.getString("genre"), rs.getDouble("price"), rs.getInt("id"));
                 if(b.getTitle().contains(search.getText().trim())){bookListView.getItems().add(b.toString());}
             }
         } catch (SQLException e) {}
