@@ -32,7 +32,7 @@ public class BookSearch {
         myAccountButton.setFont(Font.font("Arial", 12));
         myAccountButton.setStyle("-fx-background-color: #FFC627");
         myAccountButton.setTextFill(MAROON);
-        myAccountButton.setOnAction(e->new AccountOverview(curr));
+        myAccountButton.setOnAction(e->new AccountOverview(curr, "Buyer"));
 
         Button switchAccountsButton = new Button("Switch to Seller Account");
         switchAccountsButton.setFont(Font.font("Arial", 12));
@@ -139,11 +139,14 @@ public class BookSearch {
         // Action Buttons at the bottom
         Button addToCartButton = new Button("Add to Cart");
         addToCartButton.setTextFill(MAROON);
+        addToCartButton.setOnAction(e->AddToUserCart(bookListView.getSelectionModel().getSelectedItem()));
         Button viewCartButton = new Button("View Cart");
         viewCartButton.setTextFill(MAROON);
 
         addToCartButton.setStyle("-fx-background-color: #FFC627; -fx-font-size: 12;");
         viewCartButton.setStyle("-fx-background-color: #FFC627; -fx-font-size: 12;");
+
+        viewCartButton.setOnAction(e->{new cart(curr);});
 
         HBox buttonBox = new HBox(100, addToCartButton, viewCartButton);
         buttonBox.setPadding(new Insets(10));
@@ -219,7 +222,33 @@ public class BookSearch {
         } catch (SQLException e) {}
     }
 
-    private void addToUserCart() {
+    private void AddToUserCart(String s) {
+        if(s == null) {showAlert("Please Select a Book From the List");return;}
+        String i = s.substring(s.lastIndexOf(":") + 1);
+        int id = Integer.parseInt(i);
+        String query = "SELECT * from books WHERE id = " + id;
+        ResultSet rs = DataManipulator.query(query);
+        Book b;
+        try {
+            bookListView.getItems().clear();
+            while(rs.next()) {
+                b = new Book(rs.getString("title"), rs.getString("bookCondition"), rs.getString("genre"), rs.getDouble("price"), rs.getInt("id"));
+                curr.addToCart(b);
+                Inform("Successfully Added to Cart");
+                setBookListView();
+            }
+        } catch (SQLException e) {}
+    }
 
+    private void showAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR, message);
+        alert.showAndWait();
+    }
+
+    private void Inform(String s) {
+        Alert a = new Alert(Alert.AlertType.INFORMATION, s);
+        a.setTitle("Success");
+        a.setHeaderText("Successfully Added");
+        a.showAndWait();
     }
 }

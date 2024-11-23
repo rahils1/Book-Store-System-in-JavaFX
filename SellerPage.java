@@ -15,6 +15,8 @@ public class SellerPage {
     private final Color GOLD = Color.web("#FFC627");
     private final Color WHITE = Color.web("#FFFFFF");
     private Label auto_price_label;
+    private TextField priceInput;
+    private TextArea book_title;
 
     public SellerPage(User u) {
         curr = u;
@@ -27,7 +29,7 @@ public class SellerPage {
         myAccountButton.setFont(Font.font("Arial", 12));
         myAccountButton.setStyle("-fx-background-color: #FFC627");
         myAccountButton.setTextFill(MAROON);
-        myAccountButton.setOnAction(e ->new AccountOverview(curr));
+        myAccountButton.setOnAction(e ->new AccountOverview(curr, "Seller"));
 
         Button switchAccountsButton = new Button("Switch to Buyer Account");
         switchAccountsButton.setFont(Font.font("Arial", 12));
@@ -102,6 +104,7 @@ public class SellerPage {
         //Button List My Book
         Button listMyBook = new Button("List My Book");
         listMyBook.setStyle("-fx-background-color: #FFC627; -fx-font-size: 12;");
+        listMyBook.setTextFill(MAROON);
 
         //Vbox for genre checkboxes and setting margin for each checkbox
         VBox genre_set = new VBox(15);
@@ -147,25 +150,31 @@ public class SellerPage {
 
 
         //Price label
-        Label price_label = new Label("Price");
+        Label price_label = new Label("Price ($)");
         price_label.setTextFill(GOLD);
         price_label.setFont(Font.font("Arial", FontWeight.BOLD, 18));
         price_label.setAlignment(Pos.CENTER);
 
         //generate price
-        TextField priceInput = new TextField();
+        priceInput = new TextField();
         priceInput.setPromptText("Enter price in $");
         priceInput.setStyle("-fx-font-size: 14;");
         priceInput.setMaxWidth(120);
+        priceInput.textProperty().addListener((o, oldPrice, newPrice) ->{
+            if (!newPrice.isEmpty() && !newPrice.matches("\\d*\\.?\\d*")) {priceInput.setText(oldPrice);}
+        });
 
         Button generateButton = new Button("Generate Price");
         generateButton.setTextFill(MAROON);
         generateButton.setStyle("-fx-background-color: #FFC627; -fx-font-size: 12;");
-        final double[] display_price = new double[1];
-        display_price[0] = 5;
+        double[] display_price = new double[1];
+        display_price[0] = 0;
         generateButton.setOnAction(e -> {
-            display_price[0] = generate_price(0, "a");
-            auto_price_label.setText(String.format("Price: $%.2f", display_price[0]));
+            if(priceInput.getText().isEmpty()){showAlert("Please Enter a Price");}
+            else {
+                display_price[0] = generate_price(priceInput.getText().trim(), ((RadioButton)qualityGroup.getSelectedToggle()).getText());
+                auto_price_label.setText(String.format("Price: $%.2f ", display_price[0]) + "(" + getAdminCut(((RadioButton) qualityGroup.getSelectedToggle()).getText()) + "% goes to the admin)");
+            }
         });
 
         //Add radio buttons to a vbox
@@ -188,7 +197,7 @@ public class SellerPage {
         title_label.setFont(Font.font("Arial", FontWeight.BOLD, 18));
         title_label.setAlignment(Pos.CENTER);
 
-        TextArea book_title = new TextArea();
+        book_title = new TextArea();
         book_title.setPromptText("Enter the name of the book");
         book_title.setStyle("-fx-font-size: 18;");
         book_title.setWrapText(true);
@@ -201,7 +210,7 @@ public class SellerPage {
         selling_price_label.setFont(Font.font("Arial", FontWeight.BOLD, 18));
         selling_price_label.setAlignment(Pos.CENTER);
 
-        auto_price_label = new Label("5");
+        auto_price_label = new Label(String.format("Price: $%.2f", display_price[0]));
         auto_price_label.setTextFill(WHITE);
         auto_price_label.setFont(Font.font("Arial", FontWeight.BOLD, 14));
         auto_price_label.setAlignment(Pos.CENTER);
@@ -212,7 +221,10 @@ public class SellerPage {
         right_page.setPrefWidth(300);
         right_page.setAlignment(Pos.TOP_LEFT);
 
-        listMyBook.setOnAction(e->listBook(book_title.getText().trim(), ((RadioButton)genreToggle.getSelectedToggle()).getText().trim(), ((RadioButton)qualityGroup.getSelectedToggle()).getText().trim(), curr.getUname(), generate_price(0, "New")));
+        listMyBook.setOnAction(e->{
+            listBook(book_title.getText().trim(), ((RadioButton)genreToggle.getSelectedToggle()).getText().trim(), ((RadioButton)qualityGroup.getSelectedToggle()).getText().trim(), curr.getUname(), generate_price(priceInput.getText().trim(), ((RadioButton)qualityGroup.getSelectedToggle()).getText()));
+            auto_price_label.setText(String.format("Price: $%.2f ", generate_price(priceInput.getText().trim(), ((RadioButton)qualityGroup.getSelectedToggle()).getText())));
+        });
 
         BorderPane mainLayout = new BorderPane();
         mainLayout.setStyle("-fx-background-color: #8C1D40;");
@@ -229,17 +241,45 @@ public class SellerPage {
     }
 
     private void listBook(String title, String genre, String condition, String seller, double price) {
-        String query = "INSERT INTO books (title, genre, bookCondition, seller, price) VALUES ('" + title + "', '" + genre + "', '" + condition + "', '" + seller + "', '" + price + "')";
-        System.out.println(query);
+        if(title.isBlank()) {showAlert("Please Enter a Title For Your Book"); return;}
+        String query = "INSERT INTO books (title, genre, bookCondition, seller, price) VALUES ('" + title + "', '" + genre + "', '" + condition + "', '" + seller + "', " + price + ")";
+        DataManipulator.update(query);
+        Inform("Your book was listed for $" + price);
+        book_title.setText("");
+        auto_price_label.setText(String.format("Price: $%.2f", 0.0));
+        priceInput.setText("");
     }
 
-    private double generate_price(int price, String condition) {
-        double generatedPrice = 0.0;
-        return generatedPrice;
+    private double generate_price(String price, String condition) {
+        double generatedPrice = 0;
+        if(price == null || price.isEmpty()) {return generatedPrice;}
+        generatedPrice = Double.parseDouble(price);
+        double multiplier = 1;
+        if(condition.equals("Used Like New")) {multiplier = 0.9;}
+        else if (condition.equals("Moderately Used")) {multiplier = 0.92;}
+        else if (condition.equals("Heavily Used")) {multiplier = 0.94;}
+
+        return Math.round(generatedPrice * multiplier * 100) / 100.0;
+    }
+
+    private String getAdminCut(String s) {
+        String cut = "0";
+        if(s.equals("Used Like New")) {cut = "10";}
+        else if (s.equals("Moderately Used")) {cut = "8";}
+        else if (s.equals("Heavily Used")) {cut = "6";}
+        return cut;
     }
 
     private void showAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR, message);
         alert.showAndWait();
+    }
+
+    //Creates alert for successful save
+    private void Inform(String s) {
+        Alert a = new Alert(Alert.AlertType.INFORMATION, s);
+        a.setTitle("Success");
+        a.setHeaderText("Successfully Listed");
+        a.showAndWait();
     }
 }

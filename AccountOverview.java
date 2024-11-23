@@ -10,7 +10,7 @@ import javafx.scene.text.FontWeight;
 
 public class AccountOverview {
     User curr;
-    public AccountOverview(User u) {
+    public AccountOverview(User u, String prev) {
         curr = u;
         final Color MAROON = Color.web("#8C1D40");
         final Color GOLD = Color.web("FFC627");
@@ -20,7 +20,12 @@ public class AccountOverview {
         backButton.setStyle("-fx-background-color: #FFC627");
         backButton.setTextFill(MAROON);
         backButton.setPrefHeight(20);
-        backButton.setOnAction(e-> {});
+        backButton.setOnAction(e-> {
+            if(prev.equals("Buyer")) {new BookSearch(curr);}
+            else if (prev.equals("Seller")) {new SellerPage(curr);}
+            else if (prev.equals("Cart")) {new cart(curr);}
+            else {curr = null; new LoginPage();}
+        });
 
         Button logoutButton = new Button("Logout");
         logoutButton.setFont(Font.font("Arial", 12));

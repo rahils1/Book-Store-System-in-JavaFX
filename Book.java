@@ -11,7 +11,11 @@ public class Book {
         this.bookID = bookID;
     }
 
+    public int getBookID() {return bookID;}
+
     public String getTitle() {return title;}
 
-    public String toString() {return title + " - " + String.format("%.2f",price) + " - " + condition + " - " + genres + " - Book ID:" + bookID;}
+    public double getPrice() {return price;}
+
+    public String toString() {return title + " - $" + String.format("%.2f",price) + " - " + condition + " - " + genres + " - Book ID:" + bookID;}
 }

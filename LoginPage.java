@@ -44,7 +44,6 @@ public class LoginPage {
         loginButton.setPrefWidth(70);
         loginButton.setOnAction(e->onLoginAttempt());
 
-        //TODO
         Hyperlink forgotPasswordLink = new Hyperlink("Forgot Password?");
         forgotPasswordLink.setOnAction(e->new PasswordChange());
         forgotPasswordLink.setTextFill(MAROON);
@@ -78,7 +77,10 @@ public class LoginPage {
         try {
             rs.next();
             u = new User(rs.getString("fullName"), rs.getString("username"), rs.getString("pass"), rs.getString("email"), rs.getString("userType"));
-            if(u.validateUser(usernameField.getText().trim(), passwordField.getText().trim())) {new BookSearch(u);}
+            if(u.validateUser(usernameField.getText().trim(), passwordField.getText().trim())) {
+                if(u.getUserType().equals("Seller")){new SellerPage(u);}
+                else{new BookSearch(u);}
+            }
             else {showAlert("Wrong Username or Password");}
             rs.close();
         } catch (SQLException e) {showAlert("Wrong Username or Password");}

@@ -15,6 +15,8 @@ public class User {
 
     public void addToCart(Book b) {cart.add(b);}
 
+    public ArrayList<Book> getCart() {return cart;}
+
     public String getPassword() {return password;}
 
     public String getUname() {return uname;}
