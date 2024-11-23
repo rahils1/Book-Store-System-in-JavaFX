@@ -19,6 +19,7 @@ public class SellerPage {
 
     public SellerPage(User u) {
         curr = u;
+        String title, genre, condition, author = "";
 
         //Code starts for top banner
 
@@ -27,27 +28,27 @@ public class SellerPage {
         myAccountButton.setFont(Font.font("Arial", 12));
         myAccountButton.setStyle("-fx-background-color: #FFC627");
         myAccountButton.setTextFill(MAROON);
-        myAccountButton.setOnAction(e -> {
-            new AccountOverview(curr);
-        });
+        myAccountButton.setOnAction(e ->new AccountOverview(curr));
+
+        Button switchAccountsButton = new Button("Switch to Seller Account");
+        switchAccountsButton.setFont(Font.font("Arial", 12));
+        switchAccountsButton.setStyle("-fx-background-color: #FFC627");
+        switchAccountsButton.setTextFill(MAROON);
+        switchAccountsButton.setOnAction(e->new SellerPage(curr));
 
         Button logoutButton = new Button("Logout");
         logoutButton.setFont(Font.font("Arial", 12));
         logoutButton.setStyle("-fx-background-color: #FFC627");
         logoutButton.setTextFill(MAROON);
-        logoutButton.setOnAction(e -> {
-            curr = null;
-            new LoginPage();
-        });
+        logoutButton.setOnAction(e -> {curr = null;new LoginPage();});
 
         //Top Banner layout
         HBox topBanner = new HBox(200);
         topBanner.setStyle("-fx-background-color: #CECECE;");
         topBanner.setPadding(new Insets(10));
         topBanner.setAlignment(Pos.CENTER);
-        if (u.getUserType().equals("Seller") || u.getUserType().equals("Buyer and Seller")) {
-            topBanner.getChildren().addAll(myAccountButton, logoutButton);
-        }
+        if(u.getUserType().equals("Buyer and Seller")) {topBanner.getChildren().addAll(myAccountButton, switchAccountsButton,logoutButton);}
+        else {topBanner.getChildren().addAll(myAccountButton, logoutButton);}
 
         //Title of the page
         Label sellerPageLabel = new Label("Sell Books");
@@ -59,9 +60,8 @@ public class SellerPage {
         titleBox.setPadding(new Insets(10, 0, 20, 0));
 
         //Vbox to add title of the page and the top banner
-        VBox top_page = new VBox(10);
+        VBox top_page = new VBox(10, topBanner, titleBox);
         top_page.setPrefWidth(800);
-        top_page.getChildren().addAll(topBanner, titleBox);
 
         //Code ends for top banner
 
@@ -75,47 +75,53 @@ public class SellerPage {
         genreLabel.setFont(Font.font("Arial", FontWeight.BOLD, 18));
         genreLabel.setAlignment(Pos.CENTER);
 
-        //Checkbox genre
-        CheckBox scifiCheckBox = new CheckBox("Sci-Fi");
-        scifiCheckBox.setTextFill(WHITE);
-        CheckBox fantasyCheckBox = new CheckBox("Fantasy");
-        fantasyCheckBox.setTextFill(WHITE);
-        CheckBox comedyCheckBox = new CheckBox("Comedy");
-        comedyCheckBox.setTextFill(WHITE);
-        CheckBox dramaCheckBox = new CheckBox("Drama");
-        dramaCheckBox.setTextFill(WHITE);
-        CheckBox thrillerCheckBox = new CheckBox("Thriller");
-        thrillerCheckBox.setTextFill(WHITE);
-        CheckBox adventureCheckBox = new CheckBox("Adventure");
-        adventureCheckBox.setTextFill(WHITE);
-        CheckBox mysteryCheckBox = new CheckBox("Mystery");
-        mysteryCheckBox.setTextFill(WHITE);
+        //Genres
+        ToggleGroup genreToggle = new ToggleGroup();
+        RadioButton scifiToggle = new RadioButton("Sci-Fi");
+        scifiToggle.setTextFill(WHITE);
+        scifiToggle.setToggleGroup(genreToggle);
+        scifiToggle.setSelected(true);
+        RadioButton fantasyToggle = new RadioButton("Fantasy");
+        fantasyToggle.setTextFill(WHITE);
+        fantasyToggle.setToggleGroup(genreToggle);
+        RadioButton comedyToggle = new RadioButton("Comedy");
+        comedyToggle.setTextFill(WHITE);
+        comedyToggle.setToggleGroup(genreToggle);
+        RadioButton dramaToggle = new RadioButton("Drama");
+        dramaToggle.setTextFill(WHITE);
+        dramaToggle.setToggleGroup(genreToggle);
+        RadioButton thrillerToggle = new RadioButton("Thriller");
+        thrillerToggle.setTextFill(WHITE);
+        thrillerToggle.setToggleGroup(genreToggle);
+        RadioButton adventureToggle = new RadioButton("Adventure");
+        adventureToggle.setTextFill(WHITE);
+        adventureToggle.setToggleGroup(genreToggle);
+        RadioButton mysteryToggle = new RadioButton("Mystery");
+        mysteryToggle.setTextFill(WHITE);
+        mysteryToggle.setToggleGroup(genreToggle);
 
         //Button List My Book
         Button listMyBook = new Button("List My Book");
         listMyBook.setStyle("-fx-background-color: #FFC627; -fx-font-size: 12;");
-        listMyBook.setOnAction(e -> {
-        });
 
         //Vbox for genre checkboxes and setting margin for each checkbox
         VBox genre_set = new VBox(15);
         genre_set.setStyle("-fx-background-color: #8C1D40;");
-        VBox.setMargin(scifiCheckBox, new Insets(0, 0, 0, 80));
-        VBox.setMargin(fantasyCheckBox, new Insets(0, 0, 0, 80));
-        VBox.setMargin(comedyCheckBox, new Insets(0, 0, 0, 80));
-        VBox.setMargin(dramaCheckBox, new Insets(0, 0, 0, 80));
-        VBox.setMargin(thrillerCheckBox, new Insets(0, 0, 0, 80));
-        VBox.setMargin(adventureCheckBox, new Insets(0, 0, 0, 80));
-        VBox.setMargin(mysteryCheckBox, new Insets(0, 0, 0, 80));
+        VBox.setMargin(scifiToggle, new Insets(0, 0, 0, 80));
+        VBox.setMargin(fantasyToggle, new Insets(0, 0, 0, 80));
+        VBox.setMargin(comedyToggle, new Insets(0, 0, 0, 80));
+        VBox.setMargin(dramaToggle, new Insets(0, 0, 0, 80));
+        VBox.setMargin(thrillerToggle, new Insets(0, 0, 0, 80));
+        VBox.setMargin(adventureToggle, new Insets(0, 0, 0, 80));
+        VBox.setMargin(mysteryToggle, new Insets(0, 0, 0, 80));
 
-        genre_set.getChildren().addAll(scifiCheckBox, fantasyCheckBox, comedyCheckBox, dramaCheckBox, thrillerCheckBox, adventureCheckBox, mysteryCheckBox);
+        genre_set.getChildren().addAll(scifiToggle, fantasyToggle, comedyToggle, dramaToggle, thrillerToggle, adventureToggle, mysteryToggle);
 
         //Vbox for label, checkbox and button
-        VBox left_page = new VBox(50);
+        VBox left_page = new VBox(50, genreLabel, genre_set, listMyBook);
         left_page.setStyle("-fx-background-color: #8C1D40;");
         left_page.setPrefWidth(250);
         left_page.setAlignment(Pos.TOP_CENTER);
-        left_page.getChildren().addAll(genreLabel, genre_set, listMyBook);
 
         //Genre label, check boxes for genre and list my book button done
 
@@ -129,9 +135,10 @@ public class SellerPage {
 
         //quality radio buttons
         ToggleGroup qualityGroup = new ToggleGroup();
-        RadioButton used = new RadioButton("Used Like New");
-        used.setToggleGroup(qualityGroup);
-        used.setTextFill(Color.WHITE);
+        RadioButton unused = new RadioButton("New");
+        unused.setToggleGroup(qualityGroup);
+        unused.setSelected(true);
+        unused.setTextFill(Color.WHITE);
         RadioButton moderately_used = new RadioButton("Moderately Used");
         moderately_used.setToggleGroup(qualityGroup);
         moderately_used.setTextFill(Color.WHITE);
@@ -153,6 +160,7 @@ public class SellerPage {
         priceInput.setMaxWidth(120);
 
         Button generateButton = new Button("Generate Price");
+        generateButton.setTextFill(MAROON);
         generateButton.setStyle("-fx-background-color: #FFC627; -fx-font-size: 12;");
         final double[] display_price = new double[1];
         display_price[0] = 5;
@@ -162,16 +170,14 @@ public class SellerPage {
         });
 
         //Add radio buttons to a vbox
-        VBox radio_buttons = new VBox(15);
+        VBox radio_buttons = new VBox(15, unused, moderately_used, heavily_used);
         radio_buttons.setStyle("-fx-background-color: #8C1D40;");
-        radio_buttons.getChildren().addAll(used, moderately_used, heavily_used);
 
         //Add Quality, price and generate price button to a vbox
-        VBox center_page = new VBox(50);
+        VBox center_page = new VBox(50,quality_label, radio_buttons, price_label, priceInput, generateButton);
         center_page.setStyle("-fx-background-color: #8C1D40;");
         center_page.setPrefWidth(200);
         center_page.setAlignment(Pos.TOP_LEFT);
-        center_page.getChildren().addAll(quality_label, radio_buttons, price_label, priceInput, generateButton);
 
         //Quality, price and generate price button done
 
@@ -202,12 +208,12 @@ public class SellerPage {
         auto_price_label.setAlignment(Pos.CENTER);
 
         //Vbox to add everything
-        VBox right_page = new VBox(40);
+        VBox right_page = new VBox(40, title_label, book_title, selling_price_label, auto_price_label);
         right_page.setStyle("-fx-background-color: #8C1D40;");
         right_page.setPrefWidth(300);
         right_page.setAlignment(Pos.TOP_LEFT);
-        right_page.getChildren().addAll(title_label, book_title, selling_price_label, auto_price_label);
 
+        listMyBook.setOnAction(e->listBook(book_title.getText().trim(), ((RadioButton)genreToggle.getSelectedToggle()).getText().trim(), ((RadioButton)qualityGroup.getSelectedToggle()).getText().trim(), curr.getUname(), "", generate_price(0, "New")));
 
         BorderPane mainLayout = new BorderPane();
         mainLayout.setStyle("-fx-background-color: #8C1D40;");
@@ -219,10 +225,12 @@ public class SellerPage {
         BorderPane.setAlignment(top_page, Pos.CENTER);
         BorderPane.setMargin(top_page, new Insets(0, 0, 10, 0));
 
-
         Scene sc = new Scene(mainLayout, 800, 600);
         PageHandler.updateStage("Book Sell", sc);
+    }
 
+    private void listBook(String title, String genre, String condition, String seller, String author, double price) {
+        String query = "INSERT INTO books (title, genre, bookCondition, seller, author, price) VALUES ('" + title + "', '" + genre + "', '" + condition + "', '" + seller + " ', '" + author + "', '" + price + "')";
     }
 
     private double generate_price(int price, String condition) {
