@@ -32,8 +32,9 @@ CREATE TABLE `books` (
   `seller` varchar(500) DEFAULT NULL,
   `price` double DEFAULT NULL,
   `author` varchar(500) DEFAULT NULL,
+  `sold` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,7 +43,7 @@ CREATE TABLE `books` (
 
 LOCK TABLES `books` WRITE;
 /*!40000 ALTER TABLE `books` DISABLE KEYS */;
-INSERT INTO `books` VALUES (1,'Book 1','Horror','New',NULL,10,'a2'),(2,'Book 2','Fantasy','Used',NULL,12.05,'a1'),(3,'Book 3','Comedy','Heavily Used',NULL,13.74,'a1');
+INSERT INTO `books` VALUES (1,'Book 1','Horror','Used Like New','john_doe',10,'a2',0),(2,'Book 2','Fantasy','Moderately Used','john_doe',12.05,'a1',0),(3,'Book 3','Comedy','Heavily Used','john_doe',13.74,'a1',0),(4,'Book 4','Thriller','Used Like New','john_doe',12.78,'a3',0);
 /*!40000 ALTER TABLE `books` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -69,7 +70,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES ('jane_doe','Jane Doe','janedoe@example.com','pass123','Buyer and Seller'),('jane_smith','Jane Smith','jane@example.com','pass456','Buyer'),('john_doe','John Doe','john@example.com','securePass123','Seller'),('john_smith','John Smith','johnsmith@example.com','securePass456','Buyer and Seller');
+INSERT INTO `users` VALUES ('jane_doe','Jane Doe','janedoe@example.com','pass123','Buyer and Seller'),('jane_smith','Jane Smith','jane@example.com','pass456','Buyer'),('john_doe','John Doe','john@example.com','securePass123','Seller'),('john_last','John Last','john@gmail.com','pass456','Seller'),('john_smith','John Smith','johnsmith@example.com','securePass456','Buyer and Seller');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -82,4 +83,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-22  1:11:15
+-- Dump completed on 2024-11-22 23:42:47
