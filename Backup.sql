@@ -31,7 +31,6 @@ CREATE TABLE `books` (
   `bookCondition` varchar(500) DEFAULT NULL,
   `seller` varchar(500) DEFAULT NULL,
   `price` double DEFAULT NULL,
-  `author` varchar(500) DEFAULT NULL,
   `sold` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -43,7 +42,7 @@ CREATE TABLE `books` (
 
 LOCK TABLES `books` WRITE;
 /*!40000 ALTER TABLE `books` DISABLE KEYS */;
-INSERT INTO `books` VALUES (1,'Book 1','Horror','Used Like New','john_doe',10,'a2',0),(2,'Book 2','Fantasy','Moderately Used','john_doe',12.05,'a1',0),(3,'Book 3','Comedy','Heavily Used','john_doe',13.74,'a1',0),(4,'Book 4','Thriller','Used Like New','john_doe',12.78,'a3',0);
+INSERT INTO `books` VALUES (1,'Book 1','Horror','Used Like New','john_doe',10,0),(2,'Book 2','Fantasy','Moderately Used','john_doe',12.05,0),(3,'Book 3','Comedy','Heavily Used','john_doe',13.74,0),(4,'Book 4','Thriller','Used Like New','john_doe',12.78,0);
 /*!40000 ALTER TABLE `books` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -83,4 +82,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-22 23:42:47
+-- Dump completed on 2024-11-22 23:55:18
