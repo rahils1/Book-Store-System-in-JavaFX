@@ -38,11 +38,6 @@ Sparky Book Service is a comprehensive marketplace application that allows users
 - **Database**: MySQL Server 8.0 or higher
 - **JDBC Driver**: MySQL Connector/J
 
-### System Requirements
-- Operating System: Windows, macOS, or Linux
-- Memory: Minimum 512MB RAM
-- Storage: 50MB available disk space
-
 ## Installation & Setup
 
 ### 1. Database Configuration
@@ -129,13 +124,6 @@ sparky-book-service/
 
 ## Development
 
-### Running the Application
-```bash
-# Compile and run the main class
-javac -cp "path/to/javafx/lib/*:path/to/mysql-connector.jar" src/*.java
-java --module-path /path/to/javafx/lib --add-modules javafx.controls,javafx.fxml -cp ".:path/to/mysql-connector.jar" PageHandler
-```
-
 ### Building for Distribution
 1. Ensure all dependencies are properly configured
 2. Package the application with JavaFX runtime
@@ -158,10 +146,6 @@ java --module-path /path/to/javafx/lib --add-modules javafx.controls,javafx.fxml
 
 ### Support
 For technical issues or feature requests, please refer to the project documentation or contact the development team.
-
-## License
-
-This project is developed for educational purposes. Please refer to your institution's guidelines for usage and distribution.
 
 ---
 
